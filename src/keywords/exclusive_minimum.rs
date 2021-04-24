@@ -13,7 +13,7 @@ impl<'a> ExclusiveMinimumValidator {
             let limit = limit.as_f64().unwrap();
             return Ok(Box::new(ExclusiveMinimumValidator { limit }));
         }
-        Err(CompilationError::SchemaError)
+        Err(CompilationError::SchemaError(String::from("exclusive minimum/not-number")))
     }
 }
 

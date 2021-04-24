@@ -14,7 +14,7 @@ impl<'a> ExclusiveMaximumValidator {
                 limit: limit.as_f64().unwrap(),
             }));
         }
-        Err(CompilationError::SchemaError)
+        Err(CompilationError::SchemaError(String::from("exclusive maximum/not-number")))
     }
 }
 

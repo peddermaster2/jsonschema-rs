@@ -21,7 +21,7 @@ impl PatternPropertiesValidator {
                 }
                 Ok(Box::new(PatternPropertiesValidator { patterns }))
             }
-            None => Err(CompilationError::SchemaError),
+            None => Err(CompilationError::SchemaError(String::from("pattern properties/not-object"))),
         }
     }
 }

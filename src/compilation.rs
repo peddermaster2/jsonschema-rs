@@ -143,7 +143,7 @@ pub(crate) fn compile_validators(
                     }
                     Ok(validators)
                 } else {
-                    Err(CompilationError::SchemaError)
+                    Err(CompilationError::SchemaError(String::from("schema/$ref/not-string")))
                 }
             } else {
                 let mut validators = Vec::with_capacity(object.len());
@@ -157,7 +157,7 @@ pub(crate) fn compile_validators(
                 Ok(validators)
             }
         }
-        _ => Err(CompilationError::SchemaError),
+        _ => Err(CompilationError::SchemaError(String::from("schema/not-object-or-bool"))),
     }
 }
 

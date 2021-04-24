@@ -13,7 +13,7 @@ impl<'a> MaxItemsValidator {
             let limit = limit.as_u64().unwrap() as usize;
             return Ok(Box::new(MaxItemsValidator { limit }));
         }
-        Err(CompilationError::SchemaError)
+        Err(CompilationError::SchemaError(String::from("max items/not-number")))
     }
 }
 

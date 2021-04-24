@@ -15,12 +15,12 @@ impl RequiredValidator {
                 for item in items {
                     match item {
                         Value::String(string) => required.push(string.clone()),
-                        _ => return Err(CompilationError::SchemaError),
+                        _ => return Err(CompilationError::SchemaError(String::from("required/item/not-string"))),
                     }
                 }
                 Ok(Box::new(RequiredValidator { required }))
             }
-            _ => Err(CompilationError::SchemaError),
+            _ => Err(CompilationError::SchemaError(String::from("required/not-array"))),
         }
     }
 }

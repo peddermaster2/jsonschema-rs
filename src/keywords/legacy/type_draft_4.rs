@@ -20,9 +20,9 @@ impl MultipleTypesValidator {
                     "array" => types.push(PrimitiveType::Array),
                     "object" => types.push(PrimitiveType::Object),
                     "number" => types.push(PrimitiveType::Number),
-                    _ => return Err(CompilationError::SchemaError),
+                    _ => return Err(CompilationError::SchemaError(String::from("type_draft4/item/unknown-type"))),
                 },
-                _ => return Err(CompilationError::SchemaError),
+                _ => return Err(CompilationError::SchemaError(String::from("type_draft4/item/not-string"))),
             }
         }
         Ok(Box::new(MultipleTypesValidator { types }))
@@ -101,13 +101,13 @@ pub(crate) fn compile(
                 if let Some(Value::String(item)) = items.iter().next() {
                     compile_single_type(item.as_str())
                 } else {
-                    Some(Err(CompilationError::SchemaError))
+                    Some(Err(CompilationError::SchemaError(String::from("type_draft4/item/not-string"))))
                 }
             } else {
                 Some(MultipleTypesValidator::compile(items))
             }
         }
-        _ => Some(Err(CompilationError::SchemaError)),
+        _ => Some(Err(CompilationError::SchemaError(String::from("type_draft4/not-array-or-string")))),
     }
 }
 
@@ -120,6 +120,6 @@ fn compile_single_type(item: &str) -> Option<CompilationResult> {
         "array" => Some(type_::ArrayTypeValidator::compile()),
         "object" => Some(type_::ObjectTypeValidator::compile()),
         "number" => Some(type_::NumberTypeValidator::compile()),
-        _ => Some(Err(CompilationError::SchemaError)),
+        _ => Some(Err(CompilationError::SchemaError(String::from("type_draft4/unknown-type")))),
     }
 }

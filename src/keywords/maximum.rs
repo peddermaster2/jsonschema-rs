@@ -13,7 +13,7 @@ impl MaximumValidator {
             let limit = limit.as_f64().unwrap();
             return Ok(Box::new(MaximumValidator { limit }));
         }
-        Err(CompilationError::SchemaError)
+        Err(CompilationError::SchemaError(String::from("maximum/not-number")))
     }
 }
 

@@ -13,7 +13,7 @@ impl MinimumValidator {
             let limit = limit.as_f64().unwrap();
             return Ok(Box::new(MinimumValidator { limit }));
         }
-        Err(CompilationError::SchemaError)
+        Err(CompilationError::SchemaError(String::from("minimum/not-number")))
     }
 }
 

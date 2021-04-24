@@ -16,7 +16,7 @@ impl EnumValidator {
                 items: items.clone(),
             }));
         }
-        Err(CompilationError::SchemaError)
+        Err(CompilationError::SchemaError(String::from("enum/not-array")))
     }
 }
 

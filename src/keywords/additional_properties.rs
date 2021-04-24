@@ -87,7 +87,7 @@ impl AdditionalPropertiesNotEmptyFalseValidator {
                 properties: properties.clone(),
             }));
         }
-        Err(CompilationError::SchemaError)
+        Err(CompilationError::SchemaError(String::from("additional properties/properties-not-object")))
     }
 }
 
@@ -138,7 +138,7 @@ impl AdditionalPropertiesNotEmptyValidator {
                 validators: compile_validators(schema, context)?,
             }));
         }
-        Err(CompilationError::SchemaError)
+        Err(CompilationError::SchemaError(String::from("additional properties/properties-not-object")))
     }
 }
 
@@ -288,7 +288,7 @@ impl AdditionalPropertiesWithPatternsNotEmptyValidator {
                 },
             ));
         }
-        Err(CompilationError::SchemaError)
+        Err(CompilationError::SchemaError(String::from("additional properties/properties-not-object")))
     }
 }
 
@@ -345,7 +345,7 @@ impl AdditionalPropertiesWithPatternsNotEmptyFalseValidator {
                 },
             ));
         }
-        Err(CompilationError::SchemaError)
+        Err(CompilationError::SchemaError(String::from("additional properties/properties-not-object")))
     }
 }
 
@@ -412,10 +412,10 @@ pub(crate) fn compile(
                         },
                     }
                 }
-                Err(_) => Some(Err(CompilationError::SchemaError)),
+                Err(err) => Some(Err(CompilationError::Regex(err))),
             };
         }
-        Some(Err(CompilationError::SchemaError))
+        Some(Err(CompilationError::SchemaError(String::from("additional properties/patternProperties-not-object"))))
     } else {
         match schema {
             Value::Bool(true) => None, // "additionalProperties" are "true" by default

@@ -25,7 +25,7 @@ impl PatternValidator {
                     pattern,
                 }))
             }
-            _ => Err(CompilationError::SchemaError),
+            _ => Err(CompilationError::SchemaError(String::from("pattern/not-string"))),
         }
     }
 }

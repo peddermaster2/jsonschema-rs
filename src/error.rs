@@ -6,25 +6,33 @@ use std::{error, fmt, io};
 
 #[derive(Debug, PartialEq)]
 pub enum CompilationError {
-    SchemaError,
+    SchemaError(String),
+    UrlParseError(url::ParseError),
+    Regex(regex::Error),
 }
 
 impl error::Error for CompilationError {}
 
 impl fmt::Display for CompilationError {
     fn fmt(&self, f: &mut Formatter<'_>) -> Result<(), Error> {
-        write!(f, "Schema compilation error")
+        match self {
+            CompilationError::SchemaError(s) => write!(f, "Schema compilation error: {}", s),
+            CompilationError::UrlParseError(err) => {
+                write!(f, "Schema compilation error: {}", err)
+            }
+            CompilationError::Regex(err) => write!(f, "Schema compilation error: {}", err),
+        }
     }
 }
 
 impl From<regex::Error> for CompilationError {
-    fn from(_: regex::Error) -> Self {
-        CompilationError::SchemaError
+    fn from(other: regex::Error) -> Self {
+        CompilationError::Regex(other)
     }
 }
 impl From<url::ParseError> for CompilationError {
-    fn from(_: url::ParseError) -> Self {
-        CompilationError::SchemaError
+    fn from(other: url::ParseError) -> Self {
+        CompilationError::UrlParseError(other)
     }
 }
 

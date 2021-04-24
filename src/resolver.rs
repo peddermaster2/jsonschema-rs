@@ -59,7 +59,7 @@ impl<'a> Resolver<'a> {
     ) -> Result<(Url, Cow<'a, Value>), ValidationError> {
         let mut resource = url.clone();
         resource.set_fragment(None);
-        let fragment = percent_encoding::percent_decode_str(url.fragment().unwrap_or_else(|| ""))
+        let fragment = percent_encoding::percent_decode_str(url.fragment().unwrap_or(""))
             .decode_utf8()
             .unwrap();
 

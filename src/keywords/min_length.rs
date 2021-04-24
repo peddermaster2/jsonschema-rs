@@ -13,7 +13,7 @@ impl<'a> MinLengthValidator {
             let limit = limit.as_u64().unwrap() as usize;
             return Ok(Box::new(MinLengthValidator { limit }));
         }
-        Err(CompilationError::SchemaError)
+        Err(CompilationError::SchemaError(String::from("min length/not-number")))
     }
 }
 

@@ -13,7 +13,7 @@ impl<'a> MinPropertiesValidator {
             let limit = limit.as_u64().unwrap() as usize;
             return Ok(Box::new(MinPropertiesValidator { limit }));
         }
-        Err(CompilationError::SchemaError)
+        Err(CompilationError::SchemaError(String::from("min properties/not-number")))
     }
 }
 

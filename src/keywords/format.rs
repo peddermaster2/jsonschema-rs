@@ -172,6 +172,6 @@ pub(crate) fn compile(
             };
             Some(FormatValidator::compile(format, func))
         }
-        None => Some(Err(CompilationError::SchemaError)),
+        None => Some(Err(CompilationError::SchemaError(String::from("format/not-string")))),
     }
 }

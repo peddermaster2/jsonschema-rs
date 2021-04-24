@@ -190,13 +190,13 @@ pub(crate) fn compile_media_type(
                             converter,
                         ))
                     }
-                    _ => Some(Err(CompilationError::SchemaError)),
+                    _ => Some(Err(CompilationError::SchemaError(String::from("content/contentEncoding/not-string")))),
                 }
             } else {
                 Some(ContentMediaTypeValidator::compile(media_type, func))
             }
         }
-        _ => Some(Err(CompilationError::SchemaError)),
+        _ => Some(Err(CompilationError::SchemaError(String::from("content/not-string")))),
     }
 }
 
@@ -218,6 +218,6 @@ pub(crate) fn compile_content_encoding(
             };
             Some(ContentEncodingValidator::compile(content_encoding, func))
         }
-        _ => Some(Err(CompilationError::SchemaError)),
+        _ => Some(Err(CompilationError::SchemaError(String::from("content/contentEncoding/not-string")))),
     }
 }

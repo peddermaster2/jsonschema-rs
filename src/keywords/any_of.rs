@@ -18,7 +18,7 @@ impl AnyOfValidator {
                 }
                 Ok(Box::new(AnyOfValidator { schemas }))
             }
-            None => Err(CompilationError::SchemaError),
+            None => Err(CompilationError::SchemaError(String::from("any of/not-array"))),
         }
     }
 }

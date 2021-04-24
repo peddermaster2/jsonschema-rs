@@ -161,6 +161,7 @@ impl Draft {
 /// Get the `Draft` from a JSON Schema URL.
 pub fn draft_from_url(url: &str) -> Option<Draft> {
     match url {
+        "https://json-schema.org/draft/2019-09/schema" => Some(Draft::Draft201909),
         "http://json-schema.org/draft-07/schema" => Some(Draft::Draft7),
         "http://json-schema.org/draft-06/schema" => Some(Draft::Draft6),
         "http://json-schema.org/draft-04/schema" => Some(Draft::Draft4),

@@ -18,7 +18,7 @@ impl PropertiesValidator {
                 }
                 Ok(Box::new(PropertiesValidator { properties }))
             }
-            _ => Err(CompilationError::SchemaError),
+            _ => Err(CompilationError::SchemaError(String::from("properties/not-object"))),
         }
     }
 }

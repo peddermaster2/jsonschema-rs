@@ -22,7 +22,7 @@ impl DependenciesValidator {
                 }
                 Ok(Box::new(DependenciesValidator { dependencies }))
             }
-            None => Err(CompilationError::SchemaError),
+            None => Err(CompilationError::SchemaError(String::from("dependencies/not-object"))),
         }
     }
 }

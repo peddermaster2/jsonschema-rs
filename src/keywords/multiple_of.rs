@@ -103,5 +103,5 @@ pub(crate) fn compile(
             Some(MultipleOfFloatValidator::compile(multiple_of))
         };
     }
-    Some(Err(CompilationError::SchemaError))
+    Some(Err(CompilationError::SchemaError(String::from("multiple of/not-number"))))
 }

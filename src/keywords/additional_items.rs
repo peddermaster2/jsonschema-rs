@@ -115,7 +115,7 @@ pub(crate) fn compile(
                     _ => None,
                 }
             }
-            _ => Some(Err(CompilationError::SchemaError)),
+            _ => Some(Err(CompilationError::SchemaError(String::from("additional items")))),
         }
     } else {
         Some(TrueValidator::compile())

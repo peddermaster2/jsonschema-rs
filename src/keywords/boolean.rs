@@ -1,3 +1,5 @@
+#![allow(clippy::clippy::unnecessary_wraps)]
+
 use super::{CompilationResult, Validate};
 use crate::compilation::JSONSchema;
 use crate::error::{no_error, ErrorIterator, ValidationError};

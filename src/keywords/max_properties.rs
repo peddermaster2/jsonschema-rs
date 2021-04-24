@@ -13,7 +13,7 @@ impl<'a> MaxPropertiesValidator {
             let limit = limit.as_u64().unwrap() as usize;
             return Ok(Box::new(MaxPropertiesValidator { limit }));
         }
-        Err(CompilationError::SchemaError)
+        Err(CompilationError::SchemaError(String::from("max properties/not-number")))
     }
 }
 

@@ -13,7 +13,7 @@ impl MaxLengthValidator {
             let limit = limit.as_u64().unwrap() as usize;
             return Ok(Box::new(MaxLengthValidator { limit }));
         }
-        Err(CompilationError::SchemaError)
+        Err(CompilationError::SchemaError(String::from("max length/not-number")))
     }
 }
 

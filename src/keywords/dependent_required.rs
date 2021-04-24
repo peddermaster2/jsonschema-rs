@@ -27,19 +27,19 @@ impl DependentRequiredValidator {
                                         if seen.insert(string) {
                                             dependent_required.push(string.clone())
                                         } else {
-                                            return Err(CompilationError::SchemaError);
+                                            return Err(CompilationError::SchemaError(String::from("dependent required/item/already-seen")));
                                         }
                                     }
-                                    _ => return Err(CompilationError::SchemaError),
+                                    _ => return Err(CompilationError::SchemaError(String::from("dependent required/item/not-string"))),
                                 }
                             }
                         }
-                        _ => return Err(CompilationError::SchemaError),
+                        _ => return Err(CompilationError::SchemaError(String::from("dependent required/not-array"))),
                     }
                 }
                 Ok(Box::new(DependentRequiredValidator { dependent }))
             }
-            _ => Err(CompilationError::SchemaError),
+            _ => Err(CompilationError::SchemaError(String::from("dependent required/not-object"))),
         }
     }
 }

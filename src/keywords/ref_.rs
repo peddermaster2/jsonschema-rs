@@ -1,3 +1,5 @@
+#![allow(clippy::clippy::unnecessary_wraps)]
+
 use super::{CompilationResult, Validate};
 use crate::compilation::CompilationContext;
 use crate::compilation::{compile_validators, JSONSchema};
