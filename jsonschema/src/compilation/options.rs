@@ -28,6 +28,10 @@ lazy_static::lazy_static! {
             "http://json-schema.org/draft-07/schema".to_string(),
             serde_json::from_str(include_str!("../../meta_schemas/draft7.json")).expect("Valid schema!")
         );
+        store.insert(
+            "https://json-schema.org/draft/2019-09/schema".to_string(),
+            serde_json::from_str(include_str!("../../meta_schemas/draft2019-09.json")).expect("Valid schema!")
+        );
         store
     };
 }

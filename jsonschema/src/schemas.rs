@@ -10,6 +10,8 @@ pub enum Draft {
     Draft6,
     /// JSON Schema Draft 7
     Draft7,
+    /// JSON Schema Draft 2019-09
+    Draft2019_09,
 }
 
 impl Default for Draft {
@@ -29,47 +31,63 @@ impl Draft {
             "allOf" => Some(keywords::all_of::compile),
             "anyOf" => Some(keywords::any_of::compile),
             "const" => match self {
+                Draft::Draft6 | Draft::Draft7 | Draft::Draft2019_09 => {
+                    Some(keywords::const_::compile)
+                }
                 Draft::Draft4 => None,
-                Draft::Draft6 | Draft::Draft7 => Some(keywords::const_::compile),
             },
             "contains" => match self {
+                Draft::Draft6 | Draft::Draft7 | Draft::Draft2019_09 => {
+                    Some(keywords::contains::compile)
+                }
                 Draft::Draft4 => None,
-                Draft::Draft6 | Draft::Draft7 => Some(keywords::contains::compile),
             },
             "contentMediaType" => match self {
-                Draft::Draft7 | Draft::Draft6 => Some(keywords::content::compile_media_type),
+                Draft::Draft7 | Draft::Draft6 | Draft::Draft2019_09 => {
+                    Some(keywords::content::compile_media_type)
+                }
                 Draft::Draft4 => None,
             },
             "contentEncoding" => match self {
-                Draft::Draft7 | Draft::Draft6 => Some(keywords::content::compile_content_encoding),
+                Draft::Draft7 | Draft::Draft6 | Draft::Draft2019_09 => {
+                    Some(keywords::content::compile_content_encoding)
+                }
                 Draft::Draft4 => None,
             },
             "dependencies" => Some(keywords::dependencies::compile),
             "enum" => Some(keywords::enum_::compile),
             "exclusiveMaximum" => match self {
-                Draft::Draft7 | Draft::Draft6 => Some(keywords::exclusive_maximum::compile),
+                Draft::Draft7 | Draft::Draft6 | Draft::Draft2019_09 => {
+                    Some(keywords::exclusive_maximum::compile)
+                }
                 Draft::Draft4 => None,
             },
             "exclusiveMinimum" => match self {
-                Draft::Draft7 | Draft::Draft6 => Some(keywords::exclusive_minimum::compile),
+                Draft::Draft7 | Draft::Draft6 | Draft::Draft2019_09 => {
+                    Some(keywords::exclusive_minimum::compile)
+                }
                 Draft::Draft4 => None,
             },
             "format" => Some(keywords::format::compile),
             "if" => match self {
-                Draft::Draft7 => Some(keywords::if_::compile),
+                Draft::Draft7 | Draft::Draft2019_09 => Some(keywords::if_::compile),
                 Draft::Draft6 | Draft::Draft4 => None,
             },
             "items" => Some(keywords::items::compile),
             "maximum" => match self {
+                Draft::Draft6 | Draft::Draft7 | Draft::Draft2019_09 => {
+                    Some(keywords::maximum::compile)
+                }
                 Draft::Draft4 => Some(keywords::legacy::maximum_draft_4::compile),
-                Draft::Draft6 | Draft::Draft7 => Some(keywords::maximum::compile),
             },
             "maxItems" => Some(keywords::max_items::compile),
             "maxLength" => Some(keywords::max_length::compile),
             "maxProperties" => Some(keywords::max_properties::compile),
             "minimum" => match self {
+                Draft::Draft6 | Draft::Draft7 | Draft::Draft2019_09 => {
+                    Some(keywords::minimum::compile)
+                }
                 Draft::Draft4 => Some(keywords::legacy::minimum_draft_4::compile),
-                Draft::Draft6 | Draft::Draft7 => Some(keywords::minimum::compile),
             },
             "minItems" => Some(keywords::min_items::compile),
             "minLength" => Some(keywords::min_length::compile),
@@ -81,13 +99,17 @@ impl Draft {
             "patternProperties" => Some(keywords::pattern_properties::compile),
             "properties" => Some(keywords::properties::compile),
             "propertyNames" => match self {
+                Draft::Draft6 | Draft::Draft7 | Draft::Draft2019_09 => {
+                    Some(keywords::property_names::compile)
+                }
                 Draft::Draft4 => None,
-                Draft::Draft6 | Draft::Draft7 => Some(keywords::property_names::compile),
             },
             "required" => Some(keywords::required::compile),
             "type" => match self {
+                Draft::Draft6 | Draft::Draft7 | Draft::Draft2019_09 => {
+                    Some(keywords::type_::compile)
+                }
                 Draft::Draft4 => Some(keywords::legacy::type_draft_4::compile),
-                Draft::Draft6 | Draft::Draft7 => Some(keywords::type_::compile),
             },
             "uniqueItems" => Some(keywords::unique_items::compile),
             _ => None,
@@ -99,6 +121,7 @@ impl Draft {
 #[inline]
 pub(crate) fn draft_from_url(url: &str) -> Option<Draft> {
     match url {
+        "https://json-schema.org/draft/2019-09/schema" => Some(Draft::Draft2019_09),
         "http://json-schema.org/draft-07/schema#" => Some(Draft::Draft7),
         "http://json-schema.org/draft-06/schema#" => Some(Draft::Draft6),
         "http://json-schema.org/draft-04/schema#" => Some(Draft::Draft4),
