@@ -1,7 +1,8 @@
 use crate::{
     compilation::{context::CompilationContext, JSONSchema},
     error::{error, no_error, CompilationError, ErrorIterator},
-    keywords::{format_key_value_validators, CompilationResult},
+    keywords::CompilationResult,
+    paths::InstancePath,
     validator::Validate,
     ValidationError,
 };
@@ -9,9 +10,7 @@ use crate::{
 use serde_json::{Map, Value};
 use std::collections::{HashMap, HashSet};
 
-use super::InstancePath;
-
-pub struct DependentRequiredValidator {
+pub(crate) struct DependentRequiredValidator {
     dependent: HashMap<String, Vec<String>>,
 }
 
@@ -54,12 +53,12 @@ impl DependentRequiredValidator {
 impl Validate for DependentRequiredValidator {
     fn validate<'a, 'b>(
         &self,
-        schema: &'a JSONSchema,
+        _schema: &'a JSONSchema,
         instance: &'a Value,
         instance_path: &InstancePath<'b>,
     ) -> ErrorIterator<'a> {
         if let Value::Object(item) = instance {
-            for (property_name, dependent) in self.dependent.iter() {
+            for (property_name, dependent) in &self.dependent {
                 if item.contains_key(property_name) {
                     for required in dependent.iter() {
                         if !item.contains_key(required) {
@@ -78,7 +77,7 @@ impl Validate for DependentRequiredValidator {
         no_error()
     }
 
-    fn is_valid(&self, _: &JSONSchema, instance: &Value) -> bool {
+    fn is_valid(&self, _schema: &JSONSchema, instance: &Value) -> bool {
         if let Value::Object(item) = instance {
             return self.dependent.iter().all(|(property_name, dependent)| {
                 // Seems like it could be done with `filter`
@@ -95,10 +94,7 @@ impl Validate for DependentRequiredValidator {
 
 impl ToString for DependentRequiredValidator {
     fn to_string(&self) -> String {
-        format!(
-            "required: {{{}}}",
-            format_key_value_validators(&self.dependent)
-        )
+        format!("required: {{{:?}}}", self.dependent)
     }
 }
 

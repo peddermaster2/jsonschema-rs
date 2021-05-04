@@ -54,6 +54,10 @@ impl Draft {
                 }
                 Draft::Draft4 => None,
             },
+            "dependent_required" => match self {
+                Draft::Draft2019_09 => Some(keywords::dependent_required::compile),
+                _ => None,
+            },
             "dependencies" => Some(keywords::dependencies::compile),
             "enum" => Some(keywords::enum_::compile),
             "exclusiveMaximum" => match self {
