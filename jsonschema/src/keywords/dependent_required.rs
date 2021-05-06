@@ -66,7 +66,7 @@ impl Validate for DependentRequiredValidator {
                             return error(ValidationError::required(
                                 instance_path.into(),
                                 instance,
-                                required.clone(),
+                                Value::String(required.clone()),
                             ));
                         }
                     }
