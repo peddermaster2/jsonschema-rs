@@ -327,7 +327,7 @@ pub(crate) fn compile(
         } else {
             Some(Err(SchemaError))
         }
-    } else if let Some(max_contains) = parent.get("contains") {
+    } else if let Some(max_contains) = parent.get("maxContains") {
         if let Some(max_contains) = max_contains.as_u64() {
             Some(MaxContainsValidator::compile(schema, context, max_contains))
         } else {
