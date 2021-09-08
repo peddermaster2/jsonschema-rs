@@ -44,6 +44,7 @@ fn test_draft(_server_address: &str, test_case: TestCase) {
         "draft4" => Draft::Draft4,
         "draft6" => Draft::Draft6,
         "draft7" => Draft::Draft7,
+        #[cfg(draft201909)]
         "draft2019-09" => Draft::Draft201909,
         _ => panic!("Unsupported draft"),
     };
