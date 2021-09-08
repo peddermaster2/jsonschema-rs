@@ -1,3 +1,5 @@
+#![allow(clippy::unused_unit)]
+
 //! # jsonschema
 //!
 //! A crate for performing fast JSON Schema validation. It is fast due to schema compilation into

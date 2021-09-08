@@ -1,3 +1,5 @@
+#![allow(clippy::unused_unit)]
+
 use jsonschema::JSONSchema;
 use serde_json::json;
 use test_case::test_case;
